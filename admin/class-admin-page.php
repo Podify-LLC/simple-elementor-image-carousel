@@ -82,7 +82,6 @@ class SEIC_Admin_Page {
                             <p class="seic-banner-text">
                                 <?php esc_html_e( 'The ultimate lightweight solution for creating high-performance image carousels in Elementor with seamless integration.', 'seic' ); ?>
                             </p>
-                            <a href="https://podify.com" target="_blank" class="seic-btn-white"><?php esc_html_e( 'Visit Website', 'seic' ); ?></a>
                         </div>
                         <span class="dashicons dashicons-images-alt2 seic-banner-icon"></span>
                     </div>
@@ -149,10 +148,6 @@ class SEIC_Admin_Page {
                                     <a href="#" class="seic-action-btn">
                                         <span class="dashicons dashicons-media-document"></span>
                                         <span><?php esc_html_e( 'Docs', 'seic' ); ?></span>
-                                    </a>
-                                    <a href="#" class="seic-action-btn">
-                                        <span class="dashicons dashicons-video-alt3"></span>
-                                        <span><?php esc_html_e( 'Tutorials', 'seic' ); ?></span>
                                     </a>
                                     <a href="?page=seic-settings&tab=contact" class="seic-action-btn">
                                         <span class="dashicons dashicons-email"></span>
