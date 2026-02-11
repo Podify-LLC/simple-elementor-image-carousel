@@ -62,8 +62,8 @@ class SEIC_Admin_Page {
                     <a href="?page=seic-settings&tab=settings" class="<?php echo $active_tab === 'settings' ? 'active' : ''; ?>">
                         <span class="dashicons dashicons-admin-generic"></span> <?php esc_html_e( 'Settings', 'seic' ); ?>
                     </a>
-                    <a href="?page=seic-settings&tab=support" class="<?php echo $active_tab === 'support' ? 'active' : ''; ?>">
-                        <span class="dashicons dashicons-sos"></span> <?php esc_html_e( 'Support', 'seic' ); ?>
+                    <a href="?page=seic-settings&tab=contact" class="<?php echo $active_tab === 'contact' ? 'active' : ''; ?>">
+                        <span class="dashicons dashicons-email"></span> <?php esc_html_e( 'Contact', 'seic' ); ?>
                     </a>
                 </nav>
                 <div class="seic-sidebar-footer">
@@ -154,9 +154,9 @@ class SEIC_Admin_Page {
                                         <span class="dashicons dashicons-video-alt3"></span>
                                         <span><?php esc_html_e( 'Tutorials', 'seic' ); ?></span>
                                     </a>
-                                    <a href="#" class="seic-action-btn">
-                                        <span class="dashicons dashicons-sos"></span>
-                                        <span><?php esc_html_e( 'Support', 'seic' ); ?></span>
+                                    <a href="?page=seic-settings&tab=contact" class="seic-action-btn">
+                                        <span class="dashicons dashicons-email"></span>
+                                        <span><?php esc_html_e( 'Contact', 'seic' ); ?></span>
                                     </a>
                                     <a href="?page=seic-settings&tab=settings" class="seic-action-btn">
                                         <span class="dashicons dashicons-admin-generic"></span>
@@ -179,7 +179,7 @@ class SEIC_Admin_Page {
                                 <p><strong><?php esc_html_e( 'Version:', 'seic' ); ?></strong> <?php echo esc_html( $version ); ?></p>
                                 <p><strong><?php esc_html_e( 'Author:', 'seic' ); ?></strong> Podify Inc.</p>
                                 <p><strong><?php esc_html_e( 'License:', 'seic' ); ?></strong> Free</p>
-                                <p><?php printf( esc_html__( 'Need help? Check the %s or contact support.', 'seic' ), '<a href="#">' . esc_html__( 'Changelog', 'seic' ) . '</a>' ); ?></p>
+                                <p><?php printf( esc_html__( 'Need help? Check the %s or contact us.', 'seic' ), '<a href="#">' . esc_html__( 'Changelog', 'seic' ) . '</a>' ); ?></p>
                             </div>
                         </div>
                     </div>
@@ -217,15 +217,15 @@ class SEIC_Admin_Page {
                         submit_button();
                         ?>
                     </form>
-                <?php elseif ( $active_tab === 'support' ) : ?>
+                <?php elseif ( $active_tab === 'contact' ) : ?>
                     <div class="seic-section-header">
-                        <h2><?php esc_html_e( 'Get Support', 'seic' ); ?></h2>
+                        <h2><?php esc_html_e( 'Contact Us', 'seic' ); ?></h2>
                         <p><?php esc_html_e( 'Need help? We are here for you.', 'seic' ); ?></p>
                     </div>
                     <div class="seic-card">
                         <div class="seic-card-body">
-                            <p><?php esc_html_e( 'If you encounter any issues or have questions, please contact our support team.', 'seic' ); ?></p>
-                            <a href="https://podify.com/support" target="_blank" class="button button-primary"><?php esc_html_e( 'Contact Support', 'seic' ); ?></a>
+                            <p><?php esc_html_e( 'If you encounter any issues or have questions, please contact our team.', 'seic' ); ?></p>
+                            <a href="https://podify.com/contact" target="_blank" class="button button-primary"><?php esc_html_e( 'Contact Us', 'seic' ); ?></a>
                         </div>
                     </div>
                 <?php endif; ?>
