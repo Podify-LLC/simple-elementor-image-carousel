@@ -35,7 +35,7 @@ For a detailed list of changes in each version, please refer to the [changelog.m
 
 ## 👨‍💻 Author
 
-Developed and maintained by [Podify](https://podify.io).
+Developed and maintained by [Podify](https://podify.com).
 
 ## ⚖️ License
 
