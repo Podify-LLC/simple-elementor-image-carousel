@@ -42,6 +42,9 @@ class SEIC_Admin_Page {
     /**
      * Render the admin page
      */
+    /**
+     * Render the admin page
+     */
     public function render_admin_page() {
         $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'dashboard';
         $version = SEIC_VERSION;
@@ -73,216 +76,130 @@ class SEIC_Admin_Page {
 
             <div class="seic-content">
                 <?php if ( $active_tab === 'dashboard' ) : ?>
-                    <div class="seic-card">
-                        <h1><?php esc_html_e( 'Welcome to Simple Elementor Image Carousel', 'seic' ); ?></h1>
-                        <p><?php esc_html_e( 'Thank you for using our plugin. This lightweight plugin helps you create beautiful image carousels in Elementor with high performance.', 'seic' ); ?></p>
-                        
-                        <div class="seic-features-grid">
-                            <div class="seic-feature">
-                                <span class="dashicons dashicons-performance"></span>
-                                <h3><?php esc_html_e( 'High Performance', 'seic' ); ?></h3>
-                                <p><?php esc_html_e( 'Optimized for speed with built-in lazy loading support.', 'seic' ); ?></p>
-                            </div>
-                            <div class="seic-feature">
-                                <span class="dashicons dashicons-layout"></span>
-                                <h3><?php esc_html_e( 'Flexible Layouts', 'seic' ); ?></h3>
-                                <p><?php esc_html_e( 'Customize columns, spacing, and alignment effortlessly.', 'seic' ); ?></p>
-                            </div>
-                            <div class="seic-feature">
-                                <span class="dashicons dashicons-smartphone"></span>
-                                <h3><?php esc_html_e( 'Responsive', 'seic' ); ?></h3>
-                                <p><?php esc_html_e( 'Looks great on all devices with mobile-first design.', 'seic' ); ?></p>
-                            </div>
-                            <div class="seic-feature">
-                                <span class="dashicons dashicons-image-rotate"></span>
-                                <h3><?php esc_html_e( 'Infinite Loop', 'seic' ); ?></h3>
-                                <p><?php esc_html_e( 'Seamless continuous scrolling for better user experience.', 'seic' ); ?></p>
-                            </div>
-                            <div class="seic-feature">
-                                <span class="dashicons dashicons-controls-play"></span>
-                                <h3><?php esc_html_e( 'Autoplay', 'seic' ); ?></h3>
-                                <p><?php esc_html_e( 'Auto-advance slides with customizable timing and hover pause.', 'seic' ); ?></p>
-                            </div>
-                            <div class="seic-feature">
-                                <span class="dashicons dashicons-format-gallery"></span>
-                                <h3><?php esc_html_e( 'Lightbox Ready', 'seic' ); ?></h3>
-                                <p><?php esc_html_e( 'Built-in Elementor lightbox integration for full-screen viewing.', 'seic' ); ?></p>
-                            </div>
+                    <div class="seic-banner">
+                        <div class="seic-banner-content">
+                            <h1 class="seic-banner-title">
+                                <?php esc_html_e( 'Welcome to Simple Carousel', 'seic' ); ?>
+                                <span class="seic-banner-version">v<?php echo esc_html( $version ); ?></span>
+                            </h1>
+                            <p class="seic-banner-text">
+                                <?php esc_html_e( 'The ultimate lightweight solution for creating high-performance image carousels in Elementor with seamless integration.', 'seic' ); ?>
+                            </p>
+                            <a href="https://podify.io" target="_blank" class="seic-btn-white"><?php esc_html_e( 'Visit Website', 'seic' ); ?></a>
                         </div>
-
-                        <div class="seic-getting-started" style="margin-top: 40px; padding: 20px; background: #f0f7ff; border-radius: 8px; border-left: 4px solid #2271b1;">
-                            <h2><?php esc_html_e( 'Getting Started', 'seic' ); ?></h2>
-                            <ol style="padding-left: 20px; line-height: 1.8;">
-                                <li><?php esc_html_e( 'Edit any page with Elementor', 'seic' ); ?></li>
-                                <li><?php esc_html_e( 'Search for "Simple Image Carousel" in the widget panel', 'seic' ); ?></li>
-                                <li><?php esc_html_e( 'Drag and drop it onto your page', 'seic' ); ?></li>
-                                <li><?php esc_html_e( 'Add images from your media library', 'seic' ); ?></li>
-                                <li><?php esc_html_e( 'Customize the appearance and behavior', 'seic' ); ?></li>
-                            </ol>
-                        </div>
+                        <span class="dashicons dashicons-images-alt2 seic-banner-icon"></span>
                     </div>
 
+                    <div class="seic-dashboard-grid">
+                        <div class="seic-card seic-updater-card">
+                            <div class="seic-card-header">
+                                <h3 class="seic-card-title">
+                                    <span class="dashicons dashicons-update"></span>
+                                    <?php esc_html_e( 'Plugin Updates', 'seic' ); ?>
+                                </h3>
+                            </div>
+                            <div class="seic-card-body">
+                                <div class="seic-updater-status">
+                                    <div class="seic-status-info">
+                                        <p class="seic-current-version">
+                                            <strong><?php esc_html_e( 'Installed Version:', 'seic' ); ?></strong> 
+                                            <span><?php echo esc_html( $version ); ?></span>
+                                        </p>
+                                        <p class="seic-update-check">
+                                            <strong><?php esc_html_e( 'Last Checked:', 'seic' ); ?></strong>
+                                            <span><?php echo date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ); ?></span>
+                                        </p>
+                                    </div>
+                                    <div class="seic-updater-actions">
+                                        <button type="button" class="seic-btn-primary seic-check-updates">
+                                            <span class="dashicons dashicons-update"></span>
+                                            <?php esc_html_e( 'Check for Updates', 'seic' ); ?>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="seic-card">
+                            <div class="seic-card-header">
+                                <h3 class="seic-card-title">
+                                    <span class="dashicons dashicons-info"></span>
+                                    <?php esc_html_e( 'Quick Info', 'seic' ); ?>
+                                </h3>
+                            </div>
+                            <div class="seic-card-body">
+                                <ul class="seic-info-list">
+                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Elementor Compatible', 'seic' ); ?></li>
+                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Optimized Assets', 'seic' ); ?></li>
+                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Responsive Ready', 'seic' ); ?></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="seic-card">
+                            <div class="seic-card-header">
+                                <h3 class="seic-card-title">
+                                    <span class="dashicons dashicons-admin-links"></span>
+                                    <?php esc_html_e( 'Resources', 'seic' ); ?>
+                                </h3>
+                            </div>
+                            <div class="seic-card-body">
+                                <ul class="seic-info-list">
+                                    <li><a href="#"><?php esc_html_e( 'Documentation', 'seic' ); ?></a></li>
+                                    <li><a href="#"><?php esc_html_e( 'Video Tutorials', 'seic' ); ?></a></li>
+                                    <li><a href="#"><?php esc_html_e( 'Get Support', 'seic' ); ?></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                <?php elseif ( $active_tab === 'features' ) : ?>
+                    <div class="seic-section-header">
+                        <h2><?php esc_html_e( 'Available Features', 'seic' ); ?></h2>
+                        <p><?php esc_html_e( 'Explore the powerful features included in Simple Carousel.', 'seic' ); ?></p>
+                    </div>
+                    <div class="seic-features-grid">
+                        <div class="seic-feature-item">
+                            <span class="dashicons dashicons-performance"></span>
+                            <h3><?php esc_html_e( 'High Performance', 'seic' ); ?></h3>
+                            <p><?php esc_html_e( 'Minimal CSS and JS footprint for lightning-fast loading.', 'seic' ); ?></p>
+                        </div>
+                        <div class="seic-feature-item">
+                            <span class="dashicons dashicons-smartphone"></span>
+                            <h3><?php esc_html_e( 'Mobile First', 'seic' ); ?></h3>
+                            <p><?php esc_html_e( 'Fully responsive design that looks great on all devices.', 'seic' ); ?></p>
+                        </div>
+                        <div class="seic-feature-item">
+                            <span class="dashicons dashicons-admin-generic"></span>
+                            <h3><?php esc_html_e( 'Easy to Use', 'seic' ); ?></h3>
+                            <p><?php esc_html_e( 'Intuitive Elementor controls for seamless customization.', 'seic' ); ?></p>
+                        </div>
+                    </div>
                 <?php elseif ( $active_tab === 'settings' ) : ?>
-                    <div class="seic-card">
-                        <h1><?php esc_html_e( 'Global Settings', 'seic' ); ?></h1>
-                        <form method="post" action="options.php">
-                            <?php settings_fields( 'seic_settings_group' ); ?>
-                            <?php do_settings_sections( 'seic_settings_group' ); ?>
-                            
-                            <table class="form-table">
-                                <tr valign="top">
-                                    <th scope="row"><?php esc_html_e( 'Enable Global Lazy Load', 'seic' ); ?></th>
-                                    <td>
-                                        <label class="seic-switch">
-                                            <input type="checkbox" name="seic_lazy_load_enabled" value="1" <?php checked( 1, get_option( 'seic_lazy_load_enabled' ), true ); ?> />
-                                            <span class="slider round"></span>
-                                        </label>
-                                        <p class="description"><?php esc_html_e( 'Enable lazy loading for all carousels by default to improve page speed.', 'seic' ); ?></p>
-                                    </td>
-                                </tr>
-                                <tr valign="top">
-                                    <th scope="row"><?php esc_html_e( 'Default Transition Speed (ms)', 'seic' ); ?></th>
-                                    <td>
-                                        <input type="number" name="seic_default_speed" value="<?php echo esc_attr( get_option( 'seic_default_speed', 450 ) ); ?>" class="regular-text" min="150" max="3000" />
-                                        <p class="description"><?php esc_html_e( 'Default animation speed in milliseconds (150-3000). Recommended: 450-600.', 'seic' ); ?></p>
-                                    </td>
-                                </tr>
-                            </table>
-                            
-                            <?php submit_button(); ?>
-                        </form>
+                    <div class="seic-section-header">
+                        <h2><?php esc_html_e( 'Plugin Settings', 'seic' ); ?></h2>
+                        <p><?php esc_html_e( 'Configure the global behavior of the Simple Carousel plugin.', 'seic' ); ?></p>
                     </div>
-
-                <?php elseif ( $active_tab === 'changelog' ) : ?>
+                    <form method="post" action="options.php" class="seic-settings-form">
+                        <?php
+                        settings_fields( 'seic_settings_group' );
+                        do_settings_sections( 'seic-settings' );
+                        submit_button();
+                        ?>
+                    </form>
+                <?php elseif ( $active_tab === 'support' ) : ?>
+                    <div class="seic-section-header">
+                        <h2><?php esc_html_e( 'Get Support', 'seic' ); ?></h2>
+                        <p><?php esc_html_e( 'Need help? We are here for you.', 'seic' ); ?></p>
+                    </div>
                     <div class="seic-card">
-                        <h1><?php esc_html_e( 'Changelog', 'seic' ); ?></h1>
-                        
-                        <div class="seic-changelog">
-                            <div class="seic-changelog-entry">
-                                <h3>Version 1.0.52 <span class="seic-badge seic-badge-critical">Critical Fix</span></h3>
-                                <p class="seic-date">February 5, 2025</p>
-                                <ul>
-                                    <li><strong>Fixed:</strong> Blank slides appearing between images - Optimized slide duplication</li>
-                                    <li><strong>Fixed:</strong> Over-duplication causing empty carousel slots</li>
-                                    <li><strong>Added:</strong> Show/Hide Pagination Dots toggle in widget settings</li>
-                                    <li><strong>Improved:</strong> Loop mode only duplicates when necessary (not for large galleries)</li>
-                                    <li><strong>Improved:</strong> Better Swiper auto-calculation for looped slides</li>
-                                    <li><strong>Enhanced:</strong> Pagination dots now have visibility control</li>
-                                </ul>
-                            </div>
-
-                            <div class="seic-changelog-entry">
-                                <h3>Version 1.0.51 <span class="seic-badge seic-badge-update">Update</span></h3>
-                                <p class="seic-date">February 5, 2025</p>
-                                <ul>
-                                    <li><strong>Fixed:</strong> Image height consistency - All images now maintain uniform height</li>
-                                    <li><strong>Fixed:</strong> Loop mode stability - Better infinite scrolling with proper slide duplication</li>
-                                    <li><strong>Improved:</strong> Image display with object-fit: cover for better presentation</li>
-                                    <li><strong>Improved:</strong> Loop requires 3x visible slides for seamless transitions</li>
-                                    <li><strong>Enhanced:</strong> Default image height set to 400px for consistent display</li>
-                                    <li><strong>Enhanced:</strong> Better CSS transitions for smoother animations</li>
-                                </ul>
-                            </div>
-
-                            <div class="seic-changelog-entry">
-                                <h3>Version 1.0.50 <span class="seic-badge seic-badge-critical">Critical Fix</span></h3>
-                                <p class="seic-date">February 5, 2025</p>
-                                <ul>
-                                    <li><strong>Fixed:</strong> Navigation arrows not working - Complete navigation system overhaul</li>
-                                    <li><strong>Fixed:</strong> Pagination dots not clickable - Proper z-index and pointer-events implementation</li>
-                                    <li><strong>Fixed:</strong> Slides not rendering properly - Corrected Swiper container structure</li>
-                                    <li><strong>Fixed:</strong> Carousel not sliding smoothly - Improved transition configuration</li>
-                                    <li><strong>Fixed:</strong> Images not showing in loop mode - Better slide duplication logic</li>
-                                    <li><strong>Improved:</strong> Navigation arrows now perfectly circular with centered icons</li>
-                                    <li><strong>Improved:</strong> Better console logging for debugging</li>
-                                    <li><strong>Improved:</strong> Enhanced compatibility with Swiper 11/12</li>
-                                    <li><strong>Updated:</strong> CSS with proper navigation visibility</li>
-                                    <li><strong>Updated:</strong> JavaScript with better error handling</li>
-                                </ul>
-                            </div>
-
-                            <div class="seic-changelog-entry">
-                                <h3>Version 1.0.45</h3>
-                                <p class="seic-date">January 28, 2025</p>
-                                <ul>
-                                    <li>Enhanced slide duplication algorithm for better loop mode</li>
-                                    <li>Improved autoplay configuration</li>
-                                    <li>Better responsive breakpoint handling</li>
-                                    <li>Code optimization and cleanup</li>
-                                </ul>
-                            </div>
-
-                            <div class="seic-changelog-entry">
-                                <h3>Version 1.0.40</h3>
-                                <p class="seic-date">January 20, 2025</p>
-                                <ul>
-                                    <li>Added RTL (Right-to-Left) language support</li>
-                                    <li>Improved lazy loading implementation</li>
-                                    <li>Enhanced caption display options</li>
-                                    <li>Fixed minor CSS conflicts</li>
-                                </ul>
-                            </div>
+                        <div class="seic-card-body">
+                            <p><?php esc_html_e( 'If you encounter any issues or have questions, please contact our support team.', 'seic' ); ?></p>
+                            <a href="https://podify.io/support" target="_blank" class="button button-primary"><?php esc_html_e( 'Contact Support', 'seic' ); ?></a>
                         </div>
                     </div>
                 <?php endif; ?>
             </div>
         </div>
-
-        <style>
-            .seic-version {
-                font-size: 12px;
-                color: #666;
-                margin: 5px 0 0 0;
-            }
-            .seic-getting-started h2 {
-                margin-top: 0;
-                font-size: 18px;
-            }
-            .seic-changelog-entry {
-                margin-bottom: 30px;
-                padding-bottom: 20px;
-                border-bottom: 1px solid #ddd;
-            }
-            .seic-changelog-entry:last-child {
-                border-bottom: none;
-            }
-            .seic-changelog-entry h3 {
-                margin-bottom: 5px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-            .seic-date {
-                color: #666;
-                font-size: 14px;
-                margin-bottom: 15px;
-            }
-            .seic-changelog-entry ul {
-                list-style: disc;
-                padding-left: 25px;
-            }
-            .seic-changelog-entry li {
-                margin-bottom: 8px;
-                line-height: 1.6;
-            }
-            .seic-badge {
-                display: inline-block;
-                padding: 3px 10px;
-                font-size: 11px;
-                font-weight: 600;
-                border-radius: 3px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            }
-            .seic-badge-critical {
-                background: #d63638;
-                color: #fff;
-            }
-            .seic-badge-update {
-                background: #2271b1;
-                color: #fff;
-            }
-        </style>
         <?php
     }
 }

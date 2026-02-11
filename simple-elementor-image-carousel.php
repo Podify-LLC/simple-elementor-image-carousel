@@ -24,6 +24,11 @@ final class SEIC_Plugin {
 	}
 
 	public function __construct() {
+		// Define version as a global constant for other files to access easily
+		if ( ! defined( 'SEIC_VERSION' ) ) {
+			define( 'SEIC_VERSION', self::VERSION );
+		}
+
 		// Hook into Elementor's asset registration to ensure handles exist early
 		add_action( 'elementor/frontend/after_register_styles', array( $this, 'register_styles' ) );
 		add_action( 'elementor/frontend/after_register_scripts', array( $this, 'register_scripts' ) );
@@ -33,6 +38,12 @@ final class SEIC_Plugin {
 		
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
 
+		// Initialize Updater
+		$this->init_updater();
+	}
+
+	private function init_updater() {
+		require_once __DIR__ . '/includes/class-github-updater.php';
 		new \SEIC\Github_Updater(
 			__FILE__,
 			'podify-inc',
