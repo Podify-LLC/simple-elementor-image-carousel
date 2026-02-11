@@ -34,19 +34,20 @@
 
 .seic-logo {
     padding: 30px 20px;
+    background: var(--seic-primary);
 }
 
 .seic-logo h2 {
     margin: 0;
     font-size: 20px;
     font-weight: 700;
-    color: var(--seic-text);
+    color: var(--seic-white);
 }
 
 .seic-version {
     font-size: 13px;
-    color: var(--seic-primary);
-    background: rgba(30, 86, 211, 0.1);
+    color: var(--seic-white);
+    background: rgba(255, 255, 255, 0.2);
     padding: 2px 8px;
     border-radius: 12px;
     margin-top: 8px;
@@ -131,6 +132,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    color: var(--seic-white) !important;
 }
 
 .seic-banner-version {
@@ -139,6 +141,7 @@
     border-radius: 20px;
     font-size: 14px;
     font-weight: 600;
+    color: var(--seic-white);
 }
 
 .seic-banner-text {
@@ -146,6 +149,7 @@
     opacity: 0.9;
     line-height: 1.6;
     margin-bottom: 30px;
+    color: var(--seic-white) !important;
 }
 
 .seic-btn-white {
