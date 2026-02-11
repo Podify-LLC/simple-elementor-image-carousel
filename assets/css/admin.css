@@ -41,12 +41,12 @@
     margin: 0;
     font-size: 20px;
     font-weight: 700;
-    color: var(--seic-white);
+    color: #ffffff;
 }
 
 .seic-version {
     font-size: 13px;
-    color: var(--seic-white);
+    color: #ffffff;
     background: rgba(255, 255, 255, 0.2);
     padding: 2px 8px;
     border-radius: 12px;
@@ -132,7 +132,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    color: var(--seic-white) !important;
+    color: #ffffff !important;
 }
 
 .seic-banner-version {
@@ -141,7 +141,7 @@
     border-radius: 20px;
     font-size: 14px;
     font-weight: 600;
-    color: var(--seic-white);
+    color: #ffffff;
 }
 
 .seic-banner-text {
@@ -149,7 +149,7 @@
     opacity: 0.9;
     line-height: 1.6;
     margin-bottom: 30px;
-    color: var(--seic-white) !important;
+    color: #ffffff !important;
 }
 
 .seic-banner-icon {
