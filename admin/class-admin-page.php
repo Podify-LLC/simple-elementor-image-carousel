@@ -39,26 +39,36 @@ class SEIC_Admin_Page {
         register_setting( 'seic_settings_group', 'seic_default_speed' );
     }
 
+    /**
+     * Render the admin page
+     */
     public function render_admin_page() {
         $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'dashboard';
+        $version = SEIC_VERSION;
         ?>
         <div class="seic-admin-wrapper">
             <div class="seic-sidebar">
                 <div class="seic-logo">
                     <h2>Simple Carousel</h2>
-                    <p class="seic-version">v1.0.52</p>
+                    <p class="seic-version">v<?php echo esc_html( $version ); ?></p>
                 </div>
                 <nav class="seic-nav">
                     <a href="?page=seic-settings&tab=dashboard" class="<?php echo $active_tab === 'dashboard' ? 'active' : ''; ?>">
                         <span class="dashicons dashicons-dashboard"></span> <?php esc_html_e( 'Dashboard', 'seic' ); ?>
                     </a>
-                    <a href="?page=seic-settings&tab=settings" class="<?php echo $active_tab === 'settings' ? 'active' : ''; ?>">
-                        <span class="dashicons dashicons-admin-settings"></span> <?php esc_html_e( 'Settings', 'seic' ); ?>
+                    <a href="?page=seic-settings&tab=features" class="<?php echo $active_tab === 'features' ? 'active' : ''; ?>">
+                        <span class="dashicons dashicons-star-filled"></span> <?php esc_html_e( 'Features', 'seic' ); ?>
                     </a>
-                    <a href="?page=seic-settings&tab=changelog" class="<?php echo $active_tab === 'changelog' ? 'active' : ''; ?>">
-                        <span class="dashicons dashicons-list-view"></span> <?php esc_html_e( 'Changelog', 'seic' ); ?>
+                    <a href="?page=seic-settings&tab=settings" class="<?php echo $active_tab === 'settings' ? 'active' : ''; ?>">
+                        <span class="dashicons dashicons-admin-generic"></span> <?php esc_html_e( 'Settings', 'seic' ); ?>
+                    </a>
+                    <a href="?page=seic-settings&tab=support" class="<?php echo $active_tab === 'support' ? 'active' : ''; ?>">
+                        <span class="dashicons dashicons-sos"></span> <?php esc_html_e( 'Support', 'seic' ); ?>
                     </a>
                 </nav>
+                <div class="seic-sidebar-footer">
+                    <p><?php printf( esc_html__( 'By %s', 'seic' ), '<a href="https://podify.io" target="_blank">Podify</a>' ); ?></p>
+                </div>
             </div>
 
             <div class="seic-content">
