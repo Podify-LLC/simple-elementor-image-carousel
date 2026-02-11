@@ -28,9 +28,9 @@ class SEIC_Admin_Page {
 
         wp_enqueue_style(
             'seic-admin',
-            plugin_dir_url( dirname( __FILE__ ) ) . 'assets/css/admin.css',
+            plugins_url( 'assets/css/admin.css', dirname( __FILE__ ) ),
             array(),
-            '1.0.52'
+            SEIC_VERSION
         );
     }
 
@@ -39,9 +39,6 @@ class SEIC_Admin_Page {
         register_setting( 'seic_settings_group', 'seic_default_speed' );
     }
 
-    /**
-     * Render the admin page
-     */
     /**
      * Render the admin page
      */
@@ -70,7 +67,7 @@ class SEIC_Admin_Page {
                     </a>
                 </nav>
                 <div class="seic-sidebar-footer">
-                    <p><?php printf( esc_html__( 'By %s', 'seic' ), '<a href="https://podify.io" target="_blank">Podify</a>' ); ?></p>
+                    <p><?php printf( esc_html__( 'By %s', 'seic' ), '<a href="https://podify.com" target="_blank">Podify Inc.</a>' ); ?></p>
                 </div>
             </div>
 
@@ -85,7 +82,7 @@ class SEIC_Admin_Page {
                             <p class="seic-banner-text">
                                 <?php esc_html_e( 'The ultimate lightweight solution for creating high-performance image carousels in Elementor with seamless integration.', 'seic' ); ?>
                             </p>
-                            <a href="https://podify.io" target="_blank" class="seic-btn-white"><?php esc_html_e( 'Visit Website', 'seic' ); ?></a>
+                            <a href="https://podify.com" target="_blank" class="seic-btn-white"><?php esc_html_e( 'Visit Website', 'seic' ); ?></a>
                         </div>
                         <span class="dashicons dashicons-images-alt2 seic-banner-icon"></span>
                     </div>
@@ -95,25 +92,27 @@ class SEIC_Admin_Page {
                             <div class="seic-card-header">
                                 <h3 class="seic-card-title">
                                     <span class="dashicons dashicons-update"></span>
-                                    <?php esc_html_e( 'Plugin Updates', 'seic' ); ?>
+                                    <?php esc_html_e( 'Updater Status', 'seic' ); ?>
                                 </h3>
                             </div>
                             <div class="seic-card-body">
                                 <div class="seic-updater-status">
                                     <div class="seic-status-info">
-                                        <p class="seic-current-version">
-                                            <strong><?php esc_html_e( 'Installed Version:', 'seic' ); ?></strong> 
-                                            <span><?php echo esc_html( $version ); ?></span>
+                                        <p class="seic-status-badge">
+                                            <strong><?php esc_html_e( 'Status:', 'seic' ); ?></strong>
+                                            <span class="seic-status-up-to-date"><?php esc_html_e( 'UP TO DATE', 'seic' ); ?></span>
+                                        </p>
+                                        <p class="seic-version-info">
+                                            <?php printf( esc_html__( 'You are on the latest version (%s).', 'seic' ), esc_html( $version ) ); ?>
                                         </p>
                                         <p class="seic-update-check">
-                                            <strong><?php esc_html_e( 'Last Checked:', 'seic' ); ?></strong>
-                                            <span><?php echo date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ); ?></span>
+                                            <?php printf( esc_html__( 'Last checked: %s', 'seic' ), date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) ); ?>
                                         </p>
                                     </div>
                                     <div class="seic-updater-actions">
-                                        <button type="button" class="seic-btn-primary seic-check-updates">
+                                        <button type="button" class="seic-btn-outline seic-check-updates">
                                             <span class="dashicons dashicons-update"></span>
-                                            <?php esc_html_e( 'Check for Updates', 'seic' ); ?>
+                                            <?php esc_html_e( 'Check Now', 'seic' ); ?>
                                         </button>
                                     </div>
                                 </div>
@@ -123,15 +122,17 @@ class SEIC_Admin_Page {
                         <div class="seic-card">
                             <div class="seic-card-header">
                                 <h3 class="seic-card-title">
-                                    <span class="dashicons dashicons-info"></span>
-                                    <?php esc_html_e( 'Quick Info', 'seic' ); ?>
+                                    <span class="dashicons dashicons-yes"></span>
+                                    <?php esc_html_e( 'Key Features', 'seic' ); ?>
                                 </h3>
                             </div>
                             <div class="seic-card-body">
-                                <ul class="seic-info-list">
-                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Elementor Compatible', 'seic' ); ?></li>
-                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Optimized Assets', 'seic' ); ?></li>
-                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Responsive Ready', 'seic' ); ?></li>
+                                <ul class="seic-features-list-simple">
+                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Elementor Widget Integration', 'seic' ); ?></li>
+                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Lightweight Swiper.js Engine', 'seic' ); ?></li>
+                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Fully Responsive Layouts', 'seic' ); ?></li>
+                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Optimized Asset Loading', 'seic' ); ?></li>
+                                    <li><span class="dashicons dashicons-yes"></span> <?php esc_html_e( 'Lazy Loading Support', 'seic' ); ?></li>
                                 </ul>
                             </div>
                         </div>
@@ -139,16 +140,46 @@ class SEIC_Admin_Page {
                         <div class="seic-card">
                             <div class="seic-card-header">
                                 <h3 class="seic-card-title">
-                                    <span class="dashicons dashicons-admin-links"></span>
-                                    <?php esc_html_e( 'Resources', 'seic' ); ?>
+                                    <span class="dashicons dashicons-grid-view"></span>
+                                    <?php esc_html_e( 'Quick Actions', 'seic' ); ?>
                                 </h3>
                             </div>
                             <div class="seic-card-body">
-                                <ul class="seic-info-list">
-                                    <li><a href="#"><?php esc_html_e( 'Documentation', 'seic' ); ?></a></li>
-                                    <li><a href="#"><?php esc_html_e( 'Video Tutorials', 'seic' ); ?></a></li>
-                                    <li><a href="#"><?php esc_html_e( 'Get Support', 'seic' ); ?></a></li>
-                                </ul>
+                                <div class="seic-quick-actions">
+                                    <a href="#" class="seic-action-btn">
+                                        <span class="dashicons dashicons-media-document"></span>
+                                        <span><?php esc_html_e( 'Docs', 'seic' ); ?></span>
+                                    </a>
+                                    <a href="#" class="seic-action-btn">
+                                        <span class="dashicons dashicons-video-alt3"></span>
+                                        <span><?php esc_html_e( 'Tutorials', 'seic' ); ?></span>
+                                    </a>
+                                    <a href="#" class="seic-action-btn">
+                                        <span class="dashicons dashicons-sos"></span>
+                                        <span><?php esc_html_e( 'Support', 'seic' ); ?></span>
+                                    </a>
+                                    <a href="?page=seic-settings&tab=settings" class="seic-action-btn">
+                                        <span class="dashicons dashicons-admin-generic"></span>
+                                        <span><?php esc_html_e( 'Settings', 'seic' ); ?></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="seic-card seic-details-card">
+                        <div class="seic-card-header">
+                            <h3 class="seic-card-title">
+                                <span class="dashicons dashicons-info"></span>
+                                <?php esc_html_e( 'Plugin Details', 'seic' ); ?>
+                            </h3>
+                        </div>
+                        <div class="seic-card-body">
+                            <div class="seic-details-grid">
+                                <p><strong><?php esc_html_e( 'Version:', 'seic' ); ?></strong> <?php echo esc_html( $version ); ?></p>
+                                <p><strong><?php esc_html_e( 'Author:', 'seic' ); ?></strong> Podify Inc.</p>
+                                <p><strong><?php esc_html_e( 'License:', 'seic' ); ?></strong> Free</p>
+                                <p><?php printf( esc_html__( 'Need help? Check the %s or contact support.', 'seic' ), '<a href="#">' . esc_html__( 'Changelog', 'seic' ) . '</a>' ); ?></p>
                             </div>
                         </div>
                     </div>
@@ -194,7 +225,7 @@ class SEIC_Admin_Page {
                     <div class="seic-card">
                         <div class="seic-card-body">
                             <p><?php esc_html_e( 'If you encounter any issues or have questions, please contact our support team.', 'seic' ); ?></p>
-                            <a href="https://podify.io/support" target="_blank" class="button button-primary"><?php esc_html_e( 'Contact Support', 'seic' ); ?></a>
+                            <a href="https://podify.com/support" target="_blank" class="button button-primary"><?php esc_html_e( 'Contact Support', 'seic' ); ?></a>
                         </div>
                     </div>
                 <?php endif; ?>
