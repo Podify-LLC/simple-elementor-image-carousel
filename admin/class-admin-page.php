@@ -146,8 +146,8 @@ class SEIC_Admin_Page {
                             <div class="seic-card-body">
                                 <div class="seic-quick-actions">
                                     <a href="#" class="seic-action-btn">
-                                        <span class="dashicons dashicons-media-document"></span>
-                                        <span><?php esc_html_e( 'Docs', 'seic' ); ?></span>
+                                        <span class="dashicons dashicons-trash"></span>
+                                        <span><?php esc_html_e( 'Clear Cache', 'seic' ); ?></span>
                                     </a>
                                     <a href="?page=seic-settings&tab=contact" class="seic-action-btn">
                                         <span class="dashicons dashicons-email"></span>

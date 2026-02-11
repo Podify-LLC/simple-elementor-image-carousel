@@ -399,10 +399,14 @@
 @media (max-width: 1200px) {
     .seic-dashboard-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .seic-content {
+        padding: 30px;
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 991px) {
     .seic-admin-wrapper {
         flex-direction: column;
         margin-left: -20px;
@@ -411,9 +415,117 @@
         width: 100%;
         border-right: none;
         border-bottom: 1px solid var(--seic-border);
+        position: sticky;
+        top: 32px; /* WP Admin bar height */
+        z-index: 100;
+    }
+    .seic-logo {
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .seic-version {
+        margin-top: 0;
+    }
+    .seic-nav {
+        display: flex;
+        overflow-x: auto;
+        padding: 10px;
+        gap: 5px;
+        -webkit-overflow-scrolling: touch;
+    }
+    .seic-nav a {
+        margin-bottom: 0;
+        white-space: nowrap;
+        padding: 8px 12px;
+    }
+    .seic-nav a .dashicons {
+        margin-right: 6px;
+    }
+    .seic-sidebar-footer {
+        display: none;
+    }
+    .seic-content {
+        padding: 20px;
+    }
+    .seic-banner {
+        padding: 30px;
+        border-radius: 16px;
+    }
+    .seic-banner-title {
+        font-size: 28px;
+    }
+    .seic-banner-text {
+        font-size: 16px;
+    }
+    .seic-banner-icon {
+        font-size: 120px;
+        right: 30px;
+    }
+}
+
+@media (max-width: 782px) {
+    .seic-sidebar {
+        top: 46px; /* Adjusted WP Admin bar height for mobile */
     }
     .seic-dashboard-grid {
         grid-template-columns: 1fr;
+    }
+    .seic-banner-icon {
+        display: none;
+    }
+    .seic-banner-title {
+        font-size: 24px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .seic-card {
+        padding: 20px;
+    }
+    .seic-settings-form {
+        padding: 20px;
+    }
+    .seic-settings-form .form-table th {
+        width: auto;
+        display: block;
+        padding: 10px 0 5px 0;
+    }
+    .seic-settings-form .form-table td {
+        display: block;
+        padding: 0 0 15px 0;
+    }
+    .seic-features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .seic-nav {
+        padding: 5px;
+    }
+    .seic-nav a {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    .seic-banner {
+        padding: 20px;
+    }
+    .seic-banner-title {
+        font-size: 20px;
+    }
+    .seic-banner-text {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    .seic-quick-actions {
+        grid-template-columns: 1fr;
+    }
+    .seic-action-btn {
+        flex-direction: row;
+        padding: 15px;
+        justify-content: flex-start;
     }
 }
 
