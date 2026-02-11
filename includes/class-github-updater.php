@@ -27,7 +27,7 @@ class Github_Updater {
 	 * @param string $github_repo    GitHub repository name.
 	 * @param string $token_constant Name of the constant holding the GitHub PAT.
 	 */
-	public function __construct( $file, $github_user, $github_repo, $token_constant = 'SEIC_GITHUB_TOKEN' ) {
+	public function __construct( $file, $github_user, $github_repo, $token_constant = 'PODIFY_GITHUB_TOKEN' ) {
 		$this->file           = $file;
 		$this->plugin_slug    = plugin_basename( $file );
 		$this->github_user    = $github_user;

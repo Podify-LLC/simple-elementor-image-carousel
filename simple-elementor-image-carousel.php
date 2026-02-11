@@ -32,6 +32,13 @@ final class SEIC_Plugin {
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets_fallback' ), 5 );
 		
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
+
+		new \SEIC\Github_Updater(
+			__FILE__,
+			'podify-inc',
+			'simple-elementor-image-carousel',
+			'PODIFY_GITHUB_TOKEN'
+		);
 	}
 
 	public function register_styles() {
