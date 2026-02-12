@@ -130,21 +130,21 @@ class SEIC_Admin_Page {
                 <?php if ( $active_tab === 'dashboard' ) : ?>
                     <div class="seic-banner">
                         <div class="seic-banner-content">
-                            <div class="seic-banner-header">
-                                <div class="seic-banner-logo">
-                                    <img src="<?php echo esc_url( $logo_cropped_url ); ?>" alt="Podify Logo">
-                                </div>
-                                <div class="seic-banner-title-area">
-                                    <h1 class="seic-banner-title">
-                                        <?php esc_html_e( 'Welcome to Simple Carousel', 'seic' ); ?>
-                                        <span class="seic-banner-version">v<?php echo esc_html( $version ); ?></span>
-                                    </h1>
-                                </div>
-                            </div>
+                    <div class="seic-banner-header">
+                        <div class="seic-banner-title-area">
+                            <h1 class="seic-banner-title">
+                                <?php esc_html_e( 'Welcome to Simple Carousel', 'seic' ); ?>
+                                <span class="seic-banner-version">v<?php echo esc_html( $version ); ?></span>
+                            </h1>
                             <p class="seic-banner-text">
                                 <?php esc_html_e( 'The ultimate lightweight solution for creating high-performance image carousels in Elementor with seamless integration.', 'seic' ); ?>
                             </p>
                         </div>
+                        <div class="seic-banner-logo">
+                            <img src="<?php echo esc_url( $logo_cropped_url ); ?>" alt="Podify Logo">
+                        </div>
+                    </div>
+                </div>
                     </div>
 
                     <div class="seic-dashboard-grid">

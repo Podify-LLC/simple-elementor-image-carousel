@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Simple Elementor Image Carousel
  * Description: Adds a lightweight Elementor image carousel widget using Swiper (Elementor compatible).
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Podify Inc.
  * Requires at least: 6.0
  * Requires PHP: 8.2
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 final class SEIC_Plugin {
 
-	const VERSION = '1.0.4';
+	const VERSION = '1.0.5';
 	private static $instance = null;
 
 	public static function instance() {
