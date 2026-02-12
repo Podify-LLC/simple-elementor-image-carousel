@@ -38,6 +38,24 @@ class Github_Updater {
 		add_filter( 'plugins_api', array( $this, 'plugin_popup' ), 10, 3 );
 		add_filter( 'upgrader_source_selection', array( $this, 'source_selection' ), 10, 4 );
 		add_filter( 'http_request_args', array( $this, 'http_request_args' ), 10, 2 );
+		add_action( 'wp_ajax_seic_get_logo_url', array( $this, 'ajax_get_logo_url' ) );
+	}
+
+	/**
+	 * AJAX handler to get the logo URL from GitHub assets.
+	 */
+	public function ajax_get_logo_url() {
+		check_ajax_referer( 'seic_admin_nonce' );
+		
+		$release = $this->get_latest_release();
+		if ( $release ) {
+			$logo_url = $this->get_asset_url( $release, 'logo.png' );
+			if ( $logo_url ) {
+				wp_send_json_success( array( 'url' => $logo_url ) );
+			}
+		}
+		
+		wp_send_json_error();
 	}
 
 	/**
@@ -102,16 +120,18 @@ class Github_Updater {
 		$res->homepage    = "https://github.com/{$this->github_user}/{$this->github_repo}";
 		$res->download_link = $this->get_zip_url( $release );
 		
-		// Add plugin icon and banner
-		$logo_url = plugins_url( 'assets/images/logo.png', dirname( $this->file ) );
-		$res->icons = array(
-			'1x' => $logo_url,
-			'2x' => $logo_url,
-		);
-		$res->banners = array(
-			'low'  => $logo_url,
-			'high' => $logo_url,
-		);
+		// Add plugin icon and banner from GitHub assets
+		$logo_url = $this->get_asset_url( $release, 'logo.png' );
+		if ( $logo_url ) {
+			$res->icons = array(
+				'1x' => $logo_url,
+				'2x' => $logo_url,
+			);
+			$res->banners = array(
+				'low'  => $logo_url,
+				'high' => $logo_url,
+			);
+		}
 
 		$res->sections    = array(
 			'description' => ! empty( $release->body ) ? $release->body : 'No description provided.',
@@ -195,6 +215,20 @@ class Github_Updater {
 			foreach ( $release->assets as $asset ) {
 				if ( isset( $asset->name ) && preg_match( '/\.zip$/i', $asset->name ) ) {
 					// We use the API URL, not the browser download URL
+					return $asset->url;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Finds a specific asset by name.
+	 */
+	private function get_asset_url( $release, $name ) {
+		if ( ! empty( $release->assets ) && is_array( $release->assets ) ) {
+			foreach ( $release->assets as $asset ) {
+				if ( isset( $asset->name ) && $asset->name === $name ) {
 					return $asset->url;
 				}
 			}

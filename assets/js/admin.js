@@ -1,6 +1,38 @@
 jQuery(document).ready(function($) {
     'use strict';
 
+    // Fetch logo URL via API if needed
+    function fetchLogoViaApi() {
+        var $logoImgs = $('.seic-logo-img, .seic-banner-logo img');
+        
+        // Only fetch if images are broken or missing
+        $logoImgs.each(function() {
+            var $img = $(this);
+            $img.on('error', function() {
+                $.ajax({
+                    url: seic_admin.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'seic_get_logo_url',
+                        _ajax_nonce: seic_admin.nonce
+                    },
+                    success: function(response) {
+                        if (response.success && response.data.url) {
+                            $img.attr('src', response.data.url);
+                        }
+                    }
+                });
+            });
+            
+            // Trigger error if already failed
+            if (this.complete && (typeof this.naturalWidth === 'undefined' || this.naturalWidth === 0)) {
+                $img.trigger('error');
+            }
+        });
+    }
+
+    fetchLogoViaApi();
+
     // Handle "Check Now" button click
     $('.seic-check-updates').on('click', function(e) {
         e.preventDefault();
