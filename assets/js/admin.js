@@ -59,7 +59,6 @@ jQuery(document).ready(function($) {
         if ($button.hasClass('loading')) return;
         
         $button.addClass('loading').prop('disabled', true);
-        $button.find('.dashicons').addClass('spin');
         
         $.ajax({
             url: seic_admin.ajax_url,
@@ -94,7 +93,6 @@ jQuery(document).ready(function($) {
             },
             complete: function() {
                 $button.removeClass('loading').prop('disabled', false);
-                $button.find('.dashicons').removeClass('spin');
             }
         });
     });
