@@ -77,6 +77,23 @@ class Github_Updater {
 		$current_version = $transient->checked[ $this->plugin_slug ];
 		$new_version     = ltrim( $release->tag_name, 'v' );
 
+		// Check for specific version file if provided as an asset
+		$version_asset = $this->get_asset_url( $release, 'version.txt' );
+		if ( $version_asset ) {
+			$version_response = wp_remote_get( $version_asset, array(
+				'headers' => array(
+					'Authorization' => 'Bearer ' . (defined($this->token_constant) ? constant($this->token_constant) : ''),
+					'Accept'        => 'application/octet-stream'
+				)
+			) );
+			if ( ! is_wp_error( $version_response ) && wp_remote_retrieve_response_code( $version_response ) === 200 ) {
+				$remote_version = trim( wp_remote_retrieve_body( $version_response ) );
+				if ( ! empty( $remote_version ) ) {
+					$new_version = ltrim( $remote_version, 'v' );
+				}
+			}
+		}
+
 		if ( version_compare( $current_version, $new_version, '<' ) ) {
 			$package = $this->get_zip_url( $release );
 
@@ -115,10 +132,27 @@ class Github_Updater {
 			return $result;
 		}
 
+		$new_version = ltrim( $release->tag_name, 'v' );
+		$version_asset = $this->get_asset_url( $release, 'version.txt' );
+		if ( $version_asset ) {
+			$version_response = wp_remote_get( $version_asset, array(
+				'headers' => array(
+					'Authorization' => 'Bearer ' . (defined($this->token_constant) ? constant($this->token_constant) : ''),
+					'Accept'        => 'application/octet-stream'
+				)
+			) );
+			if ( ! is_wp_error( $version_response ) && wp_remote_retrieve_response_code( $version_response ) === 200 ) {
+				$remote_version = trim( wp_remote_retrieve_body( $version_response ) );
+				if ( ! empty( $remote_version ) ) {
+					$new_version = ltrim( $remote_version, 'v' );
+				}
+			}
+		}
+
 		$res              = new \stdClass();
 		$res->name        = 'Simple Elementor Image Carousel';
 		$res->slug        = $args->slug;
-		$res->version     = ltrim( $release->tag_name, 'v' );
+		$res->version     = $new_version;
 		$res->author      = 'Podify Inc.';
 		$res->homepage    = "https://github.com/{$this->github_user}/{$this->github_repo}";
 		$res->download_link = $this->get_zip_url( $release );
@@ -151,6 +185,10 @@ class Github_Updater {
 		// Only intercept requests to GitHub API or asset domains
 		if ( strpos( $url, 'api.github.com' ) !== false || strpos( $url, 'codeload.github.com' ) !== false || strpos( $url, 'objects.githubusercontent.com' ) !== false ) {
 			$token = defined( $this->token_constant ) ? constant( $this->token_constant ) : '';
+			
+			// Always provide a User-Agent for GitHub API compliance
+			$args['headers']['User-Agent'] = 'WordPress/' . get_bloginfo( 'version' ) . '; ' . get_home_url();
+
 			if ( $token ) {
 				$args['headers']['Authorization'] = 'Bearer ' . $token;
 				
@@ -203,13 +241,15 @@ class Github_Updater {
 		
 		$url = "https://api.github.com/repos/{$this->github_user}/{$this->github_repo}/releases/latest";
 		
-		$args = array();
+		$args = array(
+			'headers' => array(
+				'User-Agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; ' . get_home_url()
+			)
+		);
 		$token = defined( $this->token_constant ) ? constant( $this->token_constant ) : '';
 		if ( $token ) {
-			$args['headers'] = array(
-				'Authorization' => 'Bearer ' . $token,
-				'Accept'        => 'application/vnd.github+json',
-			);
+			$args['headers']['Authorization'] = 'Bearer ' . $token;
+			$args['headers']['Accept']        = 'application/vnd.github+json';
 		}
 
 		$response = wp_remote_get( $url, $args );
