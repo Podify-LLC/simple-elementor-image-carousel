@@ -46,7 +46,7 @@ final class SEIC_Plugin {
 		require_once __DIR__ . '/includes/class-github-updater.php';
 		new \SEIC\Github_Updater(
 			__FILE__,
-			'podify-inc',
+			'Podify-LLC',
 			'simple-elementor-image-carousel',
 			'PODIFY_GITHUB_TOKEN'
 		);

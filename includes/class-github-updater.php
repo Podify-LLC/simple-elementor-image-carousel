@@ -49,7 +49,7 @@ class Github_Updater {
 		}
 
 		$release = $this->get_latest_release();
-		if ( ! $release ) {
+		if ( ! $release || empty( $release->tag_name ) ) {
 			return $transient;
 		}
 
@@ -58,6 +58,12 @@ class Github_Updater {
 
 		if ( version_compare( $current_version, $new_version, '<' ) ) {
 			$package = $this->get_zip_url( $release );
+
+			// If no manual ZIP asset is found, we don't fall back to zipball for private repos
+			// to avoid the "commit hash" folder name issue and authentication failures.
+			if ( ! $package ) {
+				return $transient;
+			}
 
 			$obj              = new \stdClass();
 			$obj->slug        = dirname( $this->plugin_slug );
@@ -96,7 +102,7 @@ class Github_Updater {
 		$res->homepage    = "https://github.com/{$this->github_user}/{$this->github_repo}";
 		$res->download_link = $this->get_zip_url( $release );
 		$res->sections    = array(
-			'description' => $release->body,
+			'description' => ! empty( $release->body ) ? $release->body : 'No description provided.',
 			'changelog'   => 'Check GitHub releases for changelog.',
 		);
 
@@ -107,13 +113,18 @@ class Github_Updater {
 	 * Injects the Authorization header for GitHub API requests.
 	 */
 	public function http_request_args( $args, $url ) {
+		// Only intercept requests to GitHub API or asset domains
 		if ( strpos( $url, 'api.github.com' ) !== false || strpos( $url, 'codeload.github.com' ) !== false || strpos( $url, 'objects.githubusercontent.com' ) !== false ) {
 			$token = defined( $this->token_constant ) ? constant( $this->token_constant ) : '';
 			if ( $token ) {
 				$args['headers']['Authorization'] = 'Bearer ' . $token;
-				$args['headers']['Accept']        = 'application/vnd.github+json';
+				
+				// Critical: GitHub API requires specific Accept header for discovery
+				if ( strpos( $url, 'api.github.com' ) !== false && strpos( $url, '/releases/assets/' ) === false ) {
+					$args['headers']['Accept'] = 'application/vnd.github+json';
+				}
 
-				// Critical for private asset downloads
+				// Critical: Release assets REQUIRE application/octet-stream for download
 				if ( strpos( $url, '/releases/assets/' ) !== false ) {
 					$args['headers']['Accept'] = 'application/octet-stream';
 				}
@@ -165,16 +176,17 @@ class Github_Updater {
 	}
 
 	/**
-	 * Finds the ZIP asset URL or falls back to zipball_url.
+	 * Finds the ZIP asset URL or returns false if none found.
 	 */
 	private function get_zip_url( $release ) {
-		if ( ! empty( $release->assets ) ) {
+		if ( ! empty( $release->assets ) && is_array( $release->assets ) ) {
 			foreach ( $release->assets as $asset ) {
-				if ( substr( $asset->name, -4 ) === '.zip' ) {
-					return $asset->url; // Use API URL for private assets
+				if ( isset( $asset->name ) && preg_match( '/\.zip$/i', $asset->name ) ) {
+					// We use the API URL, not the browser download URL
+					return $asset->url;
 				}
 			}
 		}
-		return $release->zipball_url;
+		return false;
 	}
 }
