@@ -101,6 +101,18 @@ class Github_Updater {
 		$res->author      = 'Podify Inc.';
 		$res->homepage    = "https://github.com/{$this->github_user}/{$this->github_repo}";
 		$res->download_link = $this->get_zip_url( $release );
+		
+		// Add plugin icon and banner
+		$logo_url = plugins_url( 'assets/images/logo.png', dirname( $this->file ) );
+		$res->icons = array(
+			'1x' => $logo_url,
+			'2x' => $logo_url,
+		);
+		$res->banners = array(
+			'low'  => $logo_url,
+			'high' => $logo_url,
+		);
+
 		$res->sections    = array(
 			'description' => ! empty( $release->body ) ? $release->body : 'No description provided.',
 			'changelog'   => 'Check GitHub releases for changelog.',
