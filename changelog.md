@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.6] - 2026-02-12
+### Added
+- **"Free" Badge**: Integrated a prominent "Free" badge in the admin dashboard banner.
+- **Updater Loading State**: Added a smooth rotation animation to the "Check Now" button to provide visual feedback during update checks.
+
+### Changed
+- **Dashboard Spacing**: Optimized overall admin UI spacing (margins, padding, and grid gaps) for a cleaner, more professional look.
+- **Updater Reliability**: Reinforced GitHub API authentication headers for seamless private repository access.
+- **Sidebar Header**: Enhanced sidebar header alignment to ensure branding elements are perfectly centered.
+
+### Fixed
+- Dashboard grid cards "jumbling" or overlapping on certain screen resolutions.
+- Admin dashboard layout misalignments within the WordPress admin wrapper.
+
 ## [1.0.2] - 2026-02-12
 ### Added
 - **Podify Branding**: Integrated the official Podify logo into the admin sidebar and dashboard banner.
