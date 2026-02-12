@@ -113,14 +113,14 @@
 
 /* Banner */
 .seic-banner {
-    background: linear-gradient(90deg, #1e56d3 0%, #3b82f6 100%);
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
     color: var(--seic-white);
     padding: 50px 60px;
     border-radius: 24px;
     position: relative;
     overflow: hidden;
     margin-bottom: 40px;
-    box-shadow: 0 10px 25px rgba(30, 86, 211, 0.15);
+    box-shadow: 0 12px 30px rgba(30, 64, 175, 0.2);
 }
 
 .seic-banner-content {
@@ -129,14 +129,32 @@
     max-width: 700px;
 }
 
-.seic-banner-logo {
+.seic-banner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
+    width: 100%;
+}
+
+.seic-banner-title-area {
+    order: 1;
+}
+
+.seic-banner-logo {
+    order: 2;
+    margin-bottom: 0;
 }
 
 .seic-banner-logo img {
     max-width: 180px;
     height: auto;
-    /* Removed white filter to use original logo colors */
+    display: block;
+}
+
+/* Ensure title doesn't wrap awkwardly */
+.seic-banner-title {
+    margin: 0 !important;
 }
 
 .seic-banner-title {

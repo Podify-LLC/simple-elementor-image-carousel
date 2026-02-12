@@ -17,8 +17,15 @@ class SEIC_Admin_Page {
 
         check_ajax_referer( 'seic_admin_nonce' );
 
-        // Force WordPress to check for updates
+        // 1. Force GitHub API check by clearing our local transient
+        // The updater class uses get_site_transient internally if we were to add caching there,
+        // but here we want to force WP to re-run the 'pre_set_site_transient_update_plugins' filters.
+        
+        // 2. Clear WordPress update transients
         delete_site_transient( 'update_plugins' );
+        delete_transient( 'update_plugins' ); // Sometimes both are used
+        
+        // 3. Force a fresh update check
         wp_update_plugins();
 
         $update_plugins = get_site_transient( 'update_plugins' );
@@ -96,9 +103,9 @@ class SEIC_Admin_Page {
         ?>
         <div class="seic-admin-wrapper">
             <div class="seic-sidebar">
-                <div class="seic-logo">
-                    <img src="<?php echo esc_url( $logo_url ); ?>" alt="Podify Logo" class="seic-logo-img">
-                    <p class="seic-version">v<?php echo esc_html( $version ); ?></p>
+                <div class="seic-sidebar-logo">
+                    <img src="<?php echo esc_url( $logo_cropped_url ); ?>" alt="Podify Logo" class="seic-logo-img">
+                </div>    <p class="seic-version">v<?php echo esc_html( $version ); ?></p>
                 </div>
                 <nav class="seic-nav">
                     <a href="?page=seic-settings&tab=dashboard" class="<?php echo $active_tab === 'dashboard' ? 'active' : ''; ?>">
@@ -123,13 +130,17 @@ class SEIC_Admin_Page {
                 <?php if ( $active_tab === 'dashboard' ) : ?>
                     <div class="seic-banner">
                         <div class="seic-banner-content">
-                            <div class="seic-banner-logo">
-                                <img src="<?php echo esc_url( $logo_cropped_url ); ?>" alt="Podify Logo">
+                            <div class="seic-banner-header">
+                                <div class="seic-banner-logo">
+                                    <img src="<?php echo esc_url( $logo_cropped_url ); ?>" alt="Podify Logo">
+                                </div>
+                                <div class="seic-banner-title-area">
+                                    <h1 class="seic-banner-title">
+                                        <?php esc_html_e( 'Welcome to Simple Carousel', 'seic' ); ?>
+                                        <span class="seic-banner-version">v<?php echo esc_html( $version ); ?></span>
+                                    </h1>
+                                </div>
                             </div>
-                            <h1 class="seic-banner-title">
-                                <?php esc_html_e( 'Welcome to Simple Carousel', 'seic' ); ?>
-                                <span class="seic-banner-version">v<?php echo esc_html( $version ); ?></span>
-                            </h1>
                             <p class="seic-banner-text">
                                 <?php esc_html_e( 'The ultimate lightweight solution for creating high-performance image carousels in Elementor with seamless integration.', 'seic' ); ?>
                             </p>

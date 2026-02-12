@@ -189,6 +189,18 @@ class Github_Updater {
 	 * Fetches the latest release from GitHub API.
 	 */
 	private function get_latest_release() {
+		$transient_key = 'seic_github_release_' . $this->github_repo;
+		
+		// When manually checking via AJAX, we want to bypass the cache
+		$is_ajax_check = ( defined( 'DOING_AJAX' ) && isset( $_POST['action'] ) && $_POST['action'] === 'seic_check_updates' );
+		
+		if ( ! $is_ajax_check ) {
+			$cached = get_site_transient( $transient_key );
+			if ( $cached !== false ) {
+				return $cached;
+			}
+		}
+		
 		$url = "https://api.github.com/repos/{$this->github_user}/{$this->github_repo}/releases/latest";
 		
 		$args = array();
@@ -207,7 +219,14 @@ class Github_Updater {
 		}
 
 		$body = wp_remote_retrieve_body( $response );
-		return json_decode( $body );
+		$release = json_decode( $body );
+		
+		if ( $release && ! isset( $release->message ) ) {
+			set_site_transient( $transient_key, $release, HOUR_IN_SECONDS );
+			return $release;
+		}
+		
+		return false;
 	}
 
 	/**
