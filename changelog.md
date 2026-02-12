@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2] - 2026-02-12
+### Added
+- **Podify Branding**: Integrated the official Podify logo into the admin sidebar and dashboard banner.
+- **Updater Assets**: Enhanced the WordPress "View version details" modal with the plugin icon and banner.
+
+### Changed
+- **GitHub Updater Overhaul**: Switched from zipball downloads to manual release assets for improved reliability and folder structure control.
+- **Header Injection**: Implemented specific octet-stream header injection for secure private repository asset downloads.
+
 ## [1.0.1] - 2026-02-11
 ### Added
 - **Modern Admin UI**: Complete overhaul of the admin dashboard matching the new blue gradient design.
