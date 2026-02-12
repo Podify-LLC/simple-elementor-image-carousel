@@ -7,6 +7,36 @@ class SEIC_Admin_Page {
         add_action( 'admin_menu', array( $this, 'add_menu_page' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
         add_action( 'admin_init', array( $this, 'register_settings' ) );
+        add_action( 'wp_ajax_seic_check_updates', array( $this, 'ajax_check_updates' ) );
+    }
+
+    public function ajax_check_updates() {
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( array( 'message' => esc_html__( 'Unauthorized', 'seic' ) ) );
+        }
+
+        check_ajax_referer( 'seic_admin_nonce' );
+
+        // Force WordPress to check for updates
+        delete_site_transient( 'update_plugins' );
+        wp_update_plugins();
+
+        $update_plugins = get_site_transient( 'update_plugins' );
+        $plugin_slug = 'simple-elementor-image-carousel/simple-elementor-image-carousel.php';
+        
+        $response = array(
+            'status' => 'up-to-date',
+            'message' => esc_html__( 'You are on the latest version.', 'seic' ),
+            'last_checked' => date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) )
+        );
+
+        if ( isset( $update_plugins->response[ $plugin_slug ] ) ) {
+            $update = $update_plugins->response[ $plugin_slug ];
+            $response['status'] = 'update-available';
+            $response['message'] = sprintf( esc_html__( 'A new version (%s) is available!', 'seic' ), esc_html( $update->new_version ) );
+        }
+
+        wp_send_json_success( $response );
     }
 
     public function add_menu_page() {
@@ -26,12 +56,27 @@ class SEIC_Admin_Page {
             return;
         }
 
+        $plugin_url = plugin_dir_url( dirname( __FILE__ ) );
+
         wp_enqueue_style(
             'seic-admin',
-            plugins_url( 'assets/css/admin.css', dirname( __FILE__ ) ),
+            $plugin_url . 'assets/css/admin.css',
             array(),
             SEIC_VERSION
         );
+
+        wp_enqueue_script(
+            'seic-admin-js',
+            $plugin_url . 'assets/js/admin.js',
+            array( 'jquery' ),
+            SEIC_VERSION,
+            true
+        );
+
+        wp_localize_script( 'seic-admin-js', 'seic_admin', array(
+            'ajax_url' => admin_url( 'admin-ajax.php' ),
+            'nonce'    => wp_create_nonce( 'seic_admin_nonce' ),
+        ) );
     }
 
     public function register_settings() {
@@ -45,11 +90,13 @@ class SEIC_Admin_Page {
     public function render_admin_page() {
         $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'dashboard';
         $version = SEIC_VERSION;
+        $plugin_url = plugin_dir_url( dirname( __FILE__ ) );
+        $logo_url = $plugin_url . 'assets/images/logo.png';
         ?>
         <div class="seic-admin-wrapper">
             <div class="seic-sidebar">
                 <div class="seic-logo">
-                    <img src="<?php echo esc_url( plugins_url( 'assets/images/logo.png', dirname( __FILE__ ) ) ); ?>" alt="Podify Logo" class="seic-logo-img">
+                    <img src="<?php echo esc_url( $logo_url ); ?>" alt="Podify Logo" class="seic-logo-img">
                     <p class="seic-version">v<?php echo esc_html( $version ); ?></p>
                 </div>
                 <nav class="seic-nav">
@@ -76,7 +123,7 @@ class SEIC_Admin_Page {
                     <div class="seic-banner">
                         <div class="seic-banner-content">
                             <div class="seic-banner-logo">
-                                <img src="<?php echo esc_url( plugins_url( 'assets/images/logo.png', dirname( __FILE__ ) ) ); ?>" alt="Podify Logo">
+                                <img src="<?php echo esc_url( $logo_url ); ?>" alt="Podify Logo">
                             </div>
                             <h1 class="seic-banner-title">
                                 <?php esc_html_e( 'Welcome to Simple Carousel', 'seic' ); ?>
