@@ -136,7 +136,7 @@
 .seic-banner-logo img {
     max-width: 180px;
     height: auto;
-    filter: brightness(0) invert(1); /* Make it white to match the theme */
+    /* Removed white filter to use original logo colors */
 }
 
 .seic-banner-title {

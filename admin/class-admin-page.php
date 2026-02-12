@@ -92,6 +92,7 @@ class SEIC_Admin_Page {
         $version = SEIC_VERSION;
         $plugin_url = plugin_dir_url( dirname( __FILE__ ) );
         $logo_url = $plugin_url . 'assets/images/logo.png';
+        $logo_cropped_url = $plugin_url . 'assets/images/logo_cropped.png';
         ?>
         <div class="seic-admin-wrapper">
             <div class="seic-sidebar">
@@ -123,7 +124,7 @@ class SEIC_Admin_Page {
                     <div class="seic-banner">
                         <div class="seic-banner-content">
                             <div class="seic-banner-logo">
-                                <img src="<?php echo esc_url( $logo_url ); ?>" alt="Podify Logo">
+                                <img src="<?php echo esc_url( $logo_cropped_url ); ?>" alt="Podify Logo">
                             </div>
                             <h1 class="seic-banner-title">
                                 <?php esc_html_e( 'Welcome to Simple Carousel', 'seic' ); ?>

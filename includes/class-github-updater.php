@@ -50,9 +50,12 @@ class Github_Updater {
 		$release = $this->get_latest_release();
 		if ( $release ) {
 			$logo_url = $this->get_asset_url( $release, 'logo.png' );
-			if ( $logo_url ) {
-				wp_send_json_success( array( 'url' => $logo_url ) );
-			}
+			$logo_cropped_url = $this->get_asset_url( $release, 'logo_cropped.png' );
+			
+			wp_send_json_success( array( 
+				'logo_url' => $logo_url ? $logo_url : '',
+				'logo_cropped_url' => $logo_cropped_url ? $logo_cropped_url : $logo_url
+			) );
 		}
 		
 		wp_send_json_error();

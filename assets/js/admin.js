@@ -3,28 +3,41 @@ jQuery(document).ready(function($) {
 
     // Fetch logo URL via API if needed
     function fetchLogoViaApi() {
-        var $logoImgs = $('.seic-logo-img, .seic-banner-logo img');
+        var $logoImgs = $('.seic-logo-img');
+        var $bannerLogo = $('.seic-banner-logo img');
         
-        // Only fetch if images are broken or missing
-        $logoImgs.each(function() {
-            var $img = $(this);
-            $img.on('error', function() {
-                $.ajax({
-                    url: seic_admin.ajax_url,
-                    type: 'POST',
-                    data: {
-                        action: 'seic_get_logo_url',
-                        _ajax_nonce: seic_admin.nonce
-                    },
-                    success: function(response) {
-                        if (response.success && response.data.url) {
-                            $img.attr('src', response.data.url);
+        // Use a flag to avoid multiple AJAX calls
+        var logoFetched = false;
+
+        function doFetch() {
+            if (logoFetched) return;
+            logoFetched = true;
+
+            $.ajax({
+                url: seic_admin.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'seic_get_logo_url',
+                    _ajax_nonce: seic_admin.nonce
+                },
+                success: function(response) {
+                    if (response.success) {
+                        if (response.data.logo_url) {
+                            $logoImgs.attr('src', response.data.logo_url);
+                        }
+                        if (response.data.logo_cropped_url) {
+                            $bannerLogo.attr('src', response.data.logo_cropped_url);
                         }
                     }
-                });
+                }
             });
+        }
+
+        // Check if banner logo or sidebar logo needs fetching
+        $logoImgs.add($bannerLogo).each(function() {
+            var $img = $(this);
+            $img.on('error', doFetch);
             
-            // Trigger error if already failed
             if (this.complete && (typeof this.naturalWidth === 'undefined' || this.naturalWidth === 0)) {
                 $img.trigger('error');
             }
